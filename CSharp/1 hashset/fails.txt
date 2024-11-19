@@ -1,0 +1,18 @@
+Правильное судоку
+  bool isContains(HashSet<char> hash, int row, int col, char[][] board)
+    {
+        if (board[row][col] < '1' || board[row][col] > '9')  //это забыл
+            return false;
+
+        if (hash.Contains(board[row][col]))
+        {
+            return true;
+        }
+        
+        hash.Add(board[row][col]);
+
+        return false; //это забыл
+    }
+
+Find the Prefix Common Array of Two Arrays
+переполнение при сдвигах: вместо long использовал int 

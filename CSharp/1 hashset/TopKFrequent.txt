@@ -1,0 +1,73 @@
+/*
+347. Top K Frequent Elements
+
+Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+ 
+*/
+/*
+перебор ТС: О(n*n) , MC: O(1)
+хэшь      : О(n), MC: O(n)
+*/
+
+/*
+nums = null, [], [1]
+k = -1, 0
+nums = [1, 2, 3] , k = 1
+nums = [1, 1, 3] , k = 2
+nums = [1, 1, 1] , k = 3
+*/
+
+public class Solution {
+    public int[] TopKFrequent(int[] nums, int k) {
+        //частота числа
+        Dictionary<int, int> freq = new(nums.Length);
+        
+        foreach(var num in nums)
+        {
+            if (freq.ContainsKey(num))
+            {
+                freq[num]++;
+            }
+            else
+            {
+                freq.Add(num, 1);
+            }
+        }
+        
+        //конвертация: частота - числа
+        Dictionary<int, List<int>> cnt = new(nums.Length);
+        
+        foreach(var kv in freq)
+        {
+            if (cnt.ContainsKey(kv.Value))
+            {
+                cnt[kv.Value].Add(kv.Key);
+            }
+            else
+            {
+                cnt.Add(kv.Value, new List<int>() { kv.Key});
+            }
+        }
+        
+        List<int> result = new(k);
+        
+        int indexNum = nums.Length;
+        
+        while (indexNum > 0)
+        {
+            if (cnt.TryGetValue(indexNum, out var list))
+            {
+                result.AddRange(list);
+                if (result.Count >= k)
+                {
+                    break;
+                }
+            }
+            
+            indexNum--;
+        }
+        
+        return result.Take(k).ToArray();
+        
+    }
+}

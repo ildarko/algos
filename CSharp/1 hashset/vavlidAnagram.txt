@@ -1,0 +1,71 @@
+/*
+242. Valid Anagram
+
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+ */
+
+/*
+перебор  TC: O(n*m)
+хэшь     TC: O(n+m), MC: O(n+m)
+*/
+
+/*
+ Тесты
+ 
+ null, null
+ "", "",
+ null, ""
+ 
+ "aa", "a"
+ "ab", "ba"
+ "aab", "aba"
+*/
+
+public class Solution {
+    public bool IsAnagram(string s, string t) {        
+        
+        Dictionary<char, int> hash_s = new(s.Length);
+        Dictionary<char, int> hash_t = new(t.Length);
+        
+        hash_s = MakeHash(hash_s, s);
+        hash_t = MakeHash(hash_t, t);
+        
+        return !((hash_s.Count != hash_t.Count) ||
+                !isEqual(hash_s, hash_t) ||
+                !isEqual(hash_t, hash_s));                        
+    }
+    
+    bool isEqual (Dictionary<char, int> hash_s, Dictionary<char, int> hash_t)
+    {
+        foreach(var kv in hash_s)
+        {
+            if (! hash_t.TryGetValue(kv.Key, out int cnt) 
+                || kv.Value != cnt)
+                {
+                    return false;
+                }
+        }
+        
+        return true;
+    }
+    
+    Dictionary<char, int> MakeHash(Dictionary<char, int> hash_s, string s)
+    {
+        foreach(char c in s)
+        {
+            if (hash_s.ContainsKey(c))
+            {
+                hash_s[c]++;
+            }
+            else 
+            {
+                hash_s.Add(c, 1);
+            }
+        }
+        
+        return hash_s;
+        
+    }
+}
+ 
+ 

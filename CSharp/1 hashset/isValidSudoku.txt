@@ -1,0 +1,72 @@
+/*
+TC: O(1), MC: O(1)
+*/
+
+public class Solution {
+    public bool IsValidSudoku(char[][] board) {
+        int len = board[0].Length;
+                
+        for (int col=0; col < len; col++)
+        {
+            HashSet<char> hash = new(len);
+            for (int row=0; row < len; row++)
+            {
+                if (isContains(hash, row, col, board))
+                {
+                    return false;
+                }  
+            }
+         }
+         
+        for (int row=0; row < len; row++)
+        {
+            HashSet<char> hash = new(len);
+            for (int col=0; col < len; col++)
+            {
+                if (isContains(hash, row, col, board))
+                {
+                    return false;
+                }
+            }
+        }
+         
+        
+        for (int row=0; row < len; row += 3)
+        {
+           
+            for (int col=0; col < len; col += 3)
+            {
+                 HashSet<char> hash = new(len);
+                if (isContains(hash, row, col, board)
+                    || isContains(hash, row, col+1, board)
+                    || isContains(hash, row, col+2, board)
+                    || isContains(hash, row+1, col, board)
+                    || isContains(hash, row+1, col+1, board)
+                    || isContains(hash, row+1, col+2, board)
+                    || isContains(hash, row+2, col, board)
+                    || isContains(hash, row+2, col+1, board)
+                    || isContains(hash, row+2, col+2, board))
+                {
+                    return false;
+                }                
+            }
+         }
+         
+         return true;        
+    }
+    
+    bool isContains(HashSet<char> hash, int row, int col, char[][] board)
+    {
+        if (board[row][col] < '1' || board[row][col] > '9')  //это забыл
+            return false;
+
+        if (hash.Contains(board[row][col]))
+        {
+            return true;
+        }
+        
+        hash.Add(board[row][col]);
+
+        return false; //это забыл
+    }
+}

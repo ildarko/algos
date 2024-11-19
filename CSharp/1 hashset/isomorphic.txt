@@ -1,0 +1,70 @@
+
+/*
+205. Isomorphic Strings
+
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. 
+No two characters may map to the same character, but a character may map to itself.
+
+
+*/
+
+/*
+перебор TC: O(n*n), MC: O(1)
+хэшь  TC: O(n), MC: O(n)
+*/
+
+/*
+null,nll
+"", null  
+null, ""
+"", ""
+"a", "a"
+"aa", "a"
+"ab", "a"
+"ab", "ba"
+"ab", "dd"
+*/
+
+
+public class Solution {
+    public bool IsIsomorphic(string s, string t) {
+        if (s == null || t == null || s.Length != t.Length)
+        {
+            return false;
+        }
+        
+        //сравниваем строки s-> t, t->s
+        return IsIsomorphicByS(s, t) && IsIsomorphicByS(t, s);        
+    }
+    
+    public bool IsIsomorphicByS(string s, string t) {        
+        
+        Dictionary<char, char> s2t = new(s.Length);
+        
+        //указатель на символ строки
+        int pointer = -1;
+        
+        
+        while (++pointer < s.Length)
+        {
+            if (s2t.TryGetValue(s[pointer], out var sValue)
+            {
+                if (sValue != t[pointer])
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //добавляем соответствие симоволов
+                s2t.Add(s[pointer], t[pointer]);
+            }
+        }
+        
+        return true;        
+    }
+}

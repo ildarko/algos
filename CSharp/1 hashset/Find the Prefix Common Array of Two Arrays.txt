@@ -1,0 +1,65 @@
+/*
+2657. Find the Prefix Common Array of Two Arrays
+You are given two 0-indexed integer permutations A and B of length n.
+
+A prefix common array of A and B is an array C such that C[i] is equal to the count of numbers that are present at or before the index i in both A and B.
+
+Return the prefix common array of A and B.
+
+A sequence of n integers is called a permutation if it contains all integers from 1 to n exactly once.
+*/
+
+/*
+ TC O(n * n)    MC  O(1)
+    O(n)            O(1)
+
+*/
+
+/**
+null, null
+null, []
+[], null
+[], []
+[1], [1]
+[1, 2], [2,1]
+
+[1, 2, 3],  1, 2, 3
+[2, 1, 3]
+
+[1, 3, 5, 2]  1, 1, 2,4
+[1, 2, 3, 5]   
+
+*/
+
+
+
+public class Solution {
+    public int[] FindThePrefixCommonArray(int[] A, int[] B) {
+        int[] result = new int[A.Length];
+         
+        long bitA = 0;  
+        long bitB = 0;
+         
+        for (int i=0; i < A.Length; i++)
+        {
+            bitA |= (1L << A[i]);
+            bitB |= (1L << B[i]);
+            
+            long interSection = bitA & bitB;
+            long cnt = 0;
+            while (interSection > 0)
+            {
+                cnt += interSection & 1L;
+                interSection = interSection >> 1;
+            }      
+            
+            result[i]= (int)cnt;   
+        }
+        
+        return result;
+    }
+}
+
+
+
+
