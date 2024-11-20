@@ -15,4 +15,7 @@
     }
 
 Find the Prefix Common Array of Two Arrays
-переполнение при сдвигах: вместо long использовал int 
+переполнение при сдвигах: вместо long использовал int
+
+GroupAnagrams
+SortedDictionary<int, int> char2count = new(); //здесь пустой конструктор 

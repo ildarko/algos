@@ -1,0 +1,59 @@
+/*
+
+49. Group Anagrams
+
+Given an array of strings strs, group the 
+anagrams
+ together. You can return the answer in any order.
+*/
+
+/*
+k - length of s
+n = count strs
+
+TC: O(n * k * log k)
+MC: O(n)
+*/
+
+public class Solution {
+    public IList<IList<string>> GroupAnagrams(string[] strs) {
+        Dictionary<string, IList<string>> result = new();
+		
+		foreach(var s in strs) //O(n)
+		{
+			SortedDictionary<int, int> char2count = new();
+			
+			foreach(char c in s) //O(k)
+			{
+				if (char2count.ContainsKey((int)c)) //log k
+				{
+					char2count[(int)c]++;
+				}
+				else
+				{
+					char2count.Add((int)c, 1);
+				}
+			}		
+		
+			StringBuilder sb = new();
+			foreach (var kv in char2count)  //O(k)
+			{
+				sb.Append($"{kv.Key}{kv.Value}");
+			}
+			
+			string key = sb.ToString();
+			
+			if (result.ContainsKey(key)) //O(1)
+			{
+				result[key].Add(s);
+			}
+			else
+			{
+				result.Add(key, new List<string>()  { s });
+			}
+		}
+
+		return result.Select(kv => kv.Value).ToList();	
+    }       
+    
+}
