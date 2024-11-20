@@ -1,0 +1,20 @@
+/*
+TC: O(n)
+MC: O(1)
+*/
+
+internal class PalindromePermutation
+   {       
+       const int BEGIN_CODE = (int)'a';
+
+       public bool CanPermutePalindrome(string s)
+       {
+           int result = 0;
+           foreach (char c in s)
+           {
+               result ^= (1 << ((int)c - BEGIN_CODE));
+           }
+
+           return (s.Length % 2 == 0) ? (result == 0) : (int.PopCount(result) == 1);
+       }
+   }
